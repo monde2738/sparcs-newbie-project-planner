@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,61 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Classes {
+  classId   String  @id @db.VarChar(30)
+  beginTime Int
+  endTime   Int
+  id        String? @db.VarChar(20)
+  dayOfWeek Int
+  Users     Users?  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Classes_Users_id_fk")
+
+  @@index([id], map: "Classes_Users_id_fk")
+}
+
+model Days {
+  dayId     String      @id @db.VarChar(30)
+  year      Int
+  month     Int
+  day       Int
+  id        String      @db.VarChar(20)
+  dayOfWeek Int
+  Users     Users       @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Days_Users_id_fk")
+  Schedules Schedules[]
+
+  @@index([id], map: "Days_Users_id_fk")
+}
+
+model Schedules {
+  scheduleId String  @id @db.VarChar(30)
+  beginTime  Int
+  endTime    Int
+  interval   Int
+  name       String? @db.VarChar(100)
+  dayId      String? @db.VarChar(30)
+  Days       Days?   @relation(fields: [dayId], references: [dayId], onDelete: NoAction, onUpdate: NoAction, map: "Schedules_Days_dayId_fk")
+
+  @@index([dayId], map: "Schedules_Days_dayId_fk")
+}
+
+model Users {
+  id          String    @id @db.VarChar(20)
+  pw          String    @db.VarChar(30)
+  size        Int
+  weight      Float     @db.Float
+  connectedIp String?   @db.VarChar(255)
+  Classes     Classes[]
+  Days        Days[]
+  Weights     Weights[]
+}
+
+model Weights {
+  weightId String @id @db.VarChar(30)
+  weight   Float  @db.Float
+  time     BigInt
+  id       String @db.VarChar(20)
+  Users    Users  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Weights_Users_id_fk")
+
+  @@index([id], map: "Weights_Users_id_fk")
 }
