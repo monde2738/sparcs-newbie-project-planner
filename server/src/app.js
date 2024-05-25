@@ -10,10 +10,12 @@ const bodyParser=require('body-parser'); // body를 send하기 위함
 // 추가 라우터
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
+const verifyRouter = require('./routes/verify');
 
 app.use(bodyParser.json());
 app.use('/', loginRouter);
 app.use('/signup/', signupRouter);
+app.use('/verify/',verifyRouter);
 
 
 app.get('/status', async (req, res) => {
