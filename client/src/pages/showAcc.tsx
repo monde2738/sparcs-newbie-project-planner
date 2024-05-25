@@ -7,7 +7,6 @@ import { CAPIBase } from "../tools/serverapi";
 
 function ShowAcc({_id}){
     const [id,setId] = useState(_id);
-    useEffect(() => localStorage.clear(),[id])
     return (
         <div className="show-acc">
             <p>{id}</p>

@@ -15,51 +15,53 @@ router.get('/:id/', async (req, res) => {
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     try{
         const ret={"SUN":[],"MON":[],"TUE":[],"WED":[],"THU":[],"FRI":[],"SAT":[]};
-        const schedules = await prisma.users.findMany({
-            where:{
-                id:id
-            },
-            include:{
-                Days:{
-                    include:{
-                        Schedules:{
-                            orderBy:beginTime
-                        }
-                    }
-                }
-            }
-        });
+        console.log(124);
+        // const schedules = await prisma.users.findMany({
+        //     where:{
+        //         id:id
+        //     },
+        //     include:{
+        //         Days:{
+        //             include:{
+        //                 Schedules:{
+        //                     orderBy:beginTime
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
+        console.log(3);
         let today = new Date();
         let curday = new Date(
             today.getFullYear(),
             today.getMonth(),
             today.getDate()-today.getDay()
         );
-        for(let i=0;i<7;i++){
-            // 서치, 각 날에 정보 삽입
-            for(const day of schedules.Days){
-                if(curday.getFullYear() == day.year &&
-                curday.getMonth() == day.month && 
-                curday.getDate() == day.day){
-                    for(const schedule of schedules){
-                        ret[days[i]].append({
-                            scheduleId:schedule.scheduleId,
-                            beginTime:schedule.beginTime,
-                            endTime:schedule.endTime,
-                            interval:schedule.interval,
-                            name:schedule.name
-                        });
-                    }
-                }
-            }
-            curday = new Date(
-                curday.getFullYear(),
-                curday.getMonth(),
-                curday.getDate()+1
-            )
-        }
+        // for(let i=0;i<7;i++){
+        //     // 서치, 각 날에 정보 삽입
+        //     for(const day of schedules.Days){
+        //         if(curday.getFullYear() == day.year &&
+        //         curday.getMonth() == day.month && 
+        //         curday.getDate() == day.day){
+        //             for(const schedule of schedules){
+        //                 ret[days[i]].append({
+        //                     scheduleId:schedule.scheduleId,
+        //                     beginTime:schedule.beginTime,
+        //                     endTime:schedule.endTime,
+        //                     interval:schedule.interval,
+        //                     name:schedule.name
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     curday = new Date(
+        //         curday.getFullYear(),
+        //         curday.getMonth(),
+        //         curday.getDate()+1
+        //     )
+        // }
 
-        return res.status(200).json({result: res});
+        return res.status(200).json({result: ret});
 
     }catch(e) {
         return res.status(500).json({error:e});

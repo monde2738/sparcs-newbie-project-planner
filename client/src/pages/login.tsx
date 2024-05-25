@@ -12,13 +12,12 @@ function Login(){
     const [jwttoken, setJwttoken]=useState("");
 
     useEffect(() => {
-        if(localStorage.getItem("token")!== null && localStorage.getItem("token") !== '""'){
-            setJwttoken(() => localStorage.getItem("token"));
-        }
+        localStorage.clear();
     },[])
     useEffect(() => {
         localStorage.setItem("token", jwttoken);
-        console.log(localStorage);
+        console.log("login.tsx", jwttoken, localStorage);
+        
         if(localStorage.getItem("token")) navigate(`/main/${id}`);
     },[jwttoken])
 

@@ -6,21 +6,20 @@ import TimeTable from "./timetable.tsx";
 import ShowAcc from "./showAcc.tsx";
 import "./main.css";
 
-// 왼쪽 열: 몇시인지 차근차근 쓰기
-// 위쪽 행: 몇요일인지 표기
-// 나머지 부분: 각각의 subcell, line 집어넣어서 구현하기. 
+const Horizontal = ({children}) => (
+    <div style={{display:"flex"}}>{children}</div>
+  );
 
 function Main(){
     const navigate=useNavigate();
     const params=useParams();
     useEffect(() => {
         const asyncFun = async () => {
-            const token=localStorage.getItem("token");
             const id=params.id;
             console.log("!",localStorage);
-            console.log("!!"+token);
             interface IAPIResponse {msg:string};
-            const {data} = await axios.post<IAPIResponse>("/verify/", {id,token});
+            console.log("!",localStorage);
+            const {data} = await axios.post<IAPIResponse>("/verify/", {id,token:localStorage.getItem("token")});
             console.log(data);
             return data;
         }
@@ -39,9 +38,11 @@ function Main(){
     },[])
 
     return (
-        <div>
-            <h1>PLANNER</h1><br />
-            <ShowAcc _id={params.id} />
+        <div className="main">
+                <h1>PLANNER</h1><br />
+                <div className="acc">
+                    <ShowAcc _id={params.id} />
+                </div>
             <TimeTable id={params.id} />
 
         </div>

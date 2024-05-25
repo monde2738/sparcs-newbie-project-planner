@@ -14,7 +14,7 @@ function TimeTable({id}){
     useEffect(() => {
         const asyncFun = async () => {
             interface IAPIResponse {result:object};
-            const {data} = await axios.get<IAPIResponse>(`/main/${id}`);
+            const {data} = await axios.get<IAPIResponse>(`/main/${id}/`);
             console.log(data);
             return data;
         }
