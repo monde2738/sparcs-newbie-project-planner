@@ -18,11 +18,11 @@ function Login(){
     },[])
     useEffect(() => {
         localStorage.setItem("token", jwttoken);
-        if(jwttoken) navigate(`/main/${id}`);
+        console.log(localStorage);
+        if(localStorage.getItem("token")) navigate(`/main/${id}`);
     },[jwttoken])
 
     const tryLogin = () => {
-        console.log(id,pw)
         const asyncFun = async () => {
             interface IAPIResponse {token:string};
             const {data} = await axios.post<IAPIResponse>("/", {id:id,pw:pw});
@@ -30,9 +30,7 @@ function Login(){
             return data.token;
         }
         asyncFun().then((data) => {
-            console.log(data);
             setJwttoken(() => data);
-            console.log(jwttoken);
         }).catch((e) => window.alert(`아이디나 비밀번호가 다릅니다.(Error: ${e})`));
     }
 

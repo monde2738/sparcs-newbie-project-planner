@@ -1,19 +1,47 @@
+import axios from "axios";
 import React from "react";
 import { useEffect,useRef,useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import TimeTableColumn from "./timetableColumn.tsx";
+import "./timetable.css";
 
-// 왼쪽 열: 몇시인지 차근차근 쓰기
-// 위쪽 행: 몇요일인지 표기
-// 나머지 부분: 각각의 subcell, line 집어넣어서 구현하기. 
+const Horizontal = ({children}) => (
+    <div style={{display:"flex"}}>{children}</div>
+  );
 
-function Timetable(){
-    
+function TimeTable({id}){
+    const [weekschedules,setWeekschedules]=useState({});
+    useEffect(() => {
+        const asyncFun = async () => {
+            interface IAPIResponse {result:object};
+            const {data} = await axios.get<IAPIResponse>(`/main/${id}`);
+            console.log(data);
+            return data;
+        }
+        asyncFun().then((data) => {
+            setWeekschedules(data.result);
+        }).catch((e) => {
+            console.log(e);
+            window.alert("데이터를 불러오는 데 실패했습니다.")
+        })
+    },[])
+    // weekschedules 얻어오기
+
+
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
     return (
-        <div>
-            <p>not implemented</p>
+        <div className="timetable">
+            <div>
+                <Horizontal>
+                    {days.map((value) => (
+                        <TimeTableColumn weekday={value} _schedules={weekschedules[value]} />
+                    ))}
+                </Horizontal>
+            </div>
         </div>
     );
 
 }
 
-export {Timetable};
+export default TimeTable;

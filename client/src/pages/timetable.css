@@ -1,0 +1,40 @@
+.timetable-column {
+    min-width:120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    margin:0 auto;
+    width: fit-content;
+    max-width: 240px;
+}
+
+.todolist{
+    list-style: none;
+    padding: 0;
+    padding:10px;
+    border:solid;
+    min-width:120px;
+    max-width: 240px;
+}
+
+.timetable-column-header{
+    margin:0 auto 10px;
+    text-align: center;
+}
+
+.todo-item p{
+    white-space: normal;
+}
+
+
+.todo-item div{
+    padding:1px;
+    border: 1px solid #ccc;
+}
+
+.timetable div{
+    display:flex;
+    justify-content: center;
+    align-items: flex-start;
+}
