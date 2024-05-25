@@ -5,10 +5,7 @@ const port=8000;
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
 const bodyParser=require('body-parser'); // body를 send하기 위함
-const dotenv=require('dotenv');
 // 추가 REQUIRE
-
-dotenv.config();
 
 // 추가 라우터
 const loginRouter = require('./routes/login');

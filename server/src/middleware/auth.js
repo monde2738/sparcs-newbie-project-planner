@@ -21,7 +21,7 @@ const authMiddleware = async (req, res, next) => {
             res.status(401).json({ error: "id나 비밀번호가 다릅니다." });
         }
     } catch (error) {
-        console.error("[Auth-Middleware] Error:", error);
+        console.log("[Auth-Middleware] Error:", error);
         res.status(500).json({ error: "서버 오류 발생" });
     }
 }

@@ -9,16 +9,31 @@ function Login(){
     const [id,setId]=useState("");
     const [pw,setPw]=useState("");
     const navigate=useNavigate();
+    const [jwttoken, setJwttoken]=useState("");
+
+    useEffect(() => {
+        if(localStorage.getItem("token")!== null && localStorage.getItem("token") !== '""'){
+            setJwttoken(() => localStorage.getItem("token"));
+        }
+    },[])
+    useEffect(() => {
+        localStorage.setItem("token", jwttoken);
+        if(jwttoken) navigate(`/main/${id}`);
+    },[jwttoken])
 
     const tryLogin = () => {
         console.log(id,pw)
         const asyncFun = async () => {
-            interface IAPIResponse {success:boolean};
+            interface IAPIResponse {token:string};
             const {data} = await axios.post<IAPIResponse>("/", {id:id,pw:pw});
             console.log(data);
-            navigate("/main"); 
+            return data.token;
         }
-        asyncFun().catch((e) => window.alert(`아이디나 비밀번호가 다릅니다.(Error: ${e})`));
+        asyncFun().then((data) => {
+            console.log(data);
+            setJwttoken(() => data);
+            console.log(jwttoken);
+        }).catch((e) => window.alert(`아이디나 비밀번호가 다릅니다.(Error: ${e})`));
     }
 
     return (

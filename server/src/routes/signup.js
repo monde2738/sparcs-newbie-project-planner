@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
         if(user){
             return res.status(200).json({success:false, code:4});
         }
-        const newUser=prisma.users.create({
+        const newUser=await prisma.users.create({
             data:{
                 id:id,
                 pw:pw,
@@ -41,7 +41,6 @@ router.post('/', async (req, res) => {
         });
         return res.status(200).json({success:true, code:0});
     } catch(e) {
-        console.log("e!");
         return res.status(500).json({error:e});
     }
 })

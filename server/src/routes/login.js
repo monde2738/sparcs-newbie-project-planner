@@ -2,6 +2,9 @@ const express = require('express');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
 const authMiddleware = require('../middleware/auth');
+const jwt = require("jsonwebtoken");
+
+require('dotenv').config();
 
 const router = express.Router();
 
@@ -9,26 +12,23 @@ router.get('/', (req, res) => {
     return res.status(200).json({status:"currently running"})
 })
 
-router.get('/login/:id/:pw',async (req,res) => {
-    // console.log(req.query.q)
 
-    const user=await prisma.users.findFirst({
-        where:{
-            id:req.params.id,
-            pw:req.params.pw
-        }
-    });
-    console.log(user);
-    if(user) return res.status(200).json({id:`${req.params.id}`, pw:`${req.params.pw}`})
-    else return res.status(200).json({id:"login failed"});
-})
-
-console.log(authMiddleware)
-
-router.post('/', authMiddleware, (req, res) => {
-    console.log(req.body)
+router.post('/', authMiddleware, async(req, res) => {
+    const {id,pw}=req.body;
     try{
-        return res.status(200).json({success:true});
+        req.decoded = jwt.sign({
+            id:id}
+            ,process.env.SECRET_KEY,
+            {expiresIn: '1h'});
+        await prisma.users.update({
+            where:{
+                id:id
+            },
+            data:{
+                connectedIp:req.decoded
+            }
+        })
+        return res.status(200).json({token:req.decoded});
     } catch(e) {
         return res.status(500).json({error:e});
     }
