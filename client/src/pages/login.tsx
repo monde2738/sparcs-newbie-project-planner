@@ -24,7 +24,7 @@ function Login(){
     const tryLogin = () => {
         const asyncFun = async () => {
             interface IAPIResponse {token:string};
-            const {data} = await axios.post<IAPIResponse>("/", {id:id,pw:pw});
+            const {data} = await axios.post<IAPIResponse>(SAPIBase+"/", {id:id,pw:pw});
             console.log(data);
             return data.token;
         }

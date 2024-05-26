@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./timetable.css";
+import { SAPIBase } from "../tools/serverapi";
 // weekday: 문자열 3, schedules: scheduleId, begintime, endtime, interval, name으로 들어옴. 
 
 const Horizontal = ({children}) => (
@@ -33,7 +34,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
             if(startHour==="" || startMinute==="" || name==="") return;
             const asyncFun=async () => {
                 interface IAPIResponse {msg:string};
-                const {data}= await axios.post<IAPIResponse>(`/makeTimetable/modify`,{
+                const {data}= await axios.post<IAPIResponse>(SAPIBase+`/makeTimetable/modify`,{
                     scheduleId,
                     interval,
                     nBeginTime:60*startHour+startMinute,
@@ -50,7 +51,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
     const tryDelete=(e)=>{
         const asyncFun = async () => {
             interface IAPIResponse {msg:string};
-                const {data}= await axios.post<IAPIResponse>(`/makeTimetable/delete`,{
+                const {data}= await axios.post<IAPIResponse>(SAPIBase+`/makeTimetable/delete`,{
                     scheduleId
                 })
                 window.location.reload();
@@ -70,7 +71,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 let rInterval = (endHour*60+endMinute)-(startHour*60+startMinute);
                 if(rInterval<0) rInterval+=1440;
                 const m=rInterval/interval;
-                const {data}= await axios.post<IAPIResponse>(`/weight/update`,{
+                const {data}= await axios.post<IAPIResponse>(SAPIBase+`/weight/update`,{
                     id,
                     m
                 })

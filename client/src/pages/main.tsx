@@ -6,6 +6,7 @@ import TimeTable from "./timetable.tsx";
 import ShowAcc from "./showAcc.tsx";
 import MakeTimeTable from "./makeTimetable.tsx";
 import "./main.css";
+import { SAPIBase } from "../tools/serverapi";
 
 const Horizontal = ({children}) => (
     <div style={{display:"flex"}}>{children}</div>
@@ -20,7 +21,7 @@ function Main(){
         const asyncFun = async () => {
             const id=params.id;
             interface IAPIResponse {msg:string};
-            const {data} = await axios.post<IAPIResponse>("/verify/", {id,token:localStorage.getItem("token")});
+            const {data} = await axios.post<IAPIResponse>(SAPIBase+"/verify/", {id,token:localStorage.getItem("token")});
             return data;
         }
         asyncFun().then(resp => {
