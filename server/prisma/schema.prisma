@@ -24,7 +24,7 @@ model Days {
   month     Int
   day       Int
   id        String      @db.VarChar(20)
-  dayOfWeek Int
+  dayOfWeek String      @db.VarChar(5)
   Users     Users       @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Days_Users_id_fk")
   Schedules Schedules[]
 
@@ -32,7 +32,7 @@ model Days {
 }
 
 model Schedules {
-  scheduleId    String  @id @db.VarChar(30)
+  scheduleId    String  @id @db.VarChar(128)
   beginTime     Int
   endTime       Int
   interval      Int

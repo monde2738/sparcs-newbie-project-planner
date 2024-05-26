@@ -4,6 +4,7 @@ import { useEffect,useRef,useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TimeTable from "./timetable.tsx";
 import ShowAcc from "./showAcc.tsx";
+import MakeTimeTable from "./makeTimetable.tsx";
 import "./main.css";
 
 const Horizontal = ({children}) => (
@@ -13,14 +14,13 @@ const Horizontal = ({children}) => (
 function Main(){
     const navigate=useNavigate();
     const params=useParams();
+
+
     useEffect(() => {
         const asyncFun = async () => {
             const id=params.id;
-            console.log("!",localStorage);
             interface IAPIResponse {msg:string};
-            console.log("!",localStorage);
             const {data} = await axios.post<IAPIResponse>("/verify/", {id,token:localStorage.getItem("token")});
-            console.log(data);
             return data;
         }
         asyncFun().then(resp => {
@@ -44,6 +44,7 @@ function Main(){
                     <ShowAcc _id={params.id} />
                 </div>
             <TimeTable id={params.id} />
+            <MakeTimeTable id={params.id} />
 
         </div>
     );

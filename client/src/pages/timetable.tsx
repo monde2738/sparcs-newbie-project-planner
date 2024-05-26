@@ -10,6 +10,7 @@ const Horizontal = ({children}) => (
   );
 
 function TimeTable({id}){
+    // weekschedules 얻어오기
     const [weekschedules,setWeekschedules]=useState({});
     useEffect(() => {
         const asyncFun = async () => {
@@ -25,7 +26,6 @@ function TimeTable({id}){
             window.alert("데이터를 불러오는 데 실패했습니다.")
         })
     },[])
-    // weekschedules 얻어오기
 
 
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -35,7 +35,7 @@ function TimeTable({id}){
             <div>
                 <Horizontal>
                     {days.map((value) => (
-                        <TimeTableColumn weekday={value} _schedules={weekschedules[value]} />
+                        <TimeTableColumn id={id} weekday={value} _schedules={weekschedules[value]} />
                     ))}
                 </Horizontal>
             </div>

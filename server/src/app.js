@@ -12,12 +12,15 @@ const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const verifyRouter = require('./routes/verify');
 const mainRouter = require('./routes/main');
+const makeRouter = require('./routes/makeTimetable');
+
 
 app.use(bodyParser.json());
 app.use('/', loginRouter);
 app.use('/signup/', signupRouter);
 app.use('/verify/',verifyRouter);
 app.use('/main/', mainRouter);
+app.use('/makeTimetable/', makeRouter);
 
 
 app.get('/status', async (req, res) => {

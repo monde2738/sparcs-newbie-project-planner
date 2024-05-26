@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     console.log(req.body)
     const {id, pw, pw2} = req.body;
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     try{
         if(id.length<3 || id.length>20){
             return res.status(200).json({success:false, code:1});
@@ -40,8 +41,32 @@ router.post('/', async (req, res) => {
                 connectedIp:null
             }
         });
+        let today=new Date()
+        let curday=new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()-today.getDay()
+        )
+        for(let i=0;i<7;i++){
+            await prisma.days.create({
+                data:{
+                    dayId:toString(Date.now()),
+                    year:curday.getFullYear(),
+                    month:curday.getMonth(),
+                    day:curday.getDate(),
+                    id,
+                    dayOfWeek:days[i]
+                }
+            });
+            curday=new Date(
+                today.getFullYear(),
+                curday.getMonth(),
+                curday.getDate()+1
+            )
+        }
         return res.status(200).json({success:true, code:0});
     } catch(e) {
+        console.log(e);
         return res.status(500).json({error:e});
     }
 })
