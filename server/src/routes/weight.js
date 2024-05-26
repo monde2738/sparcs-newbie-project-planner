@@ -13,12 +13,14 @@ router.get('/', (req, res) => {
 router.get('/:id/', async (req, res) => {
     const id=req.params.id;
     try{
-        const weight = await prisma.users.findFirst({
+        const user = await prisma.users.findFirst({
             where:{
                 id
             }
         })
-        return res.status(200).json({weight:weight.weight});
+        console.log(req.params.id);
+        console.log(user.connectedIp);
+        return res.status(200).json({weight:user.weight});
     }catch(e) {
         console.log(e);
         return res.status(500).json({error:"조회 실패"});
@@ -26,14 +28,14 @@ router.get('/:id/', async (req, res) => {
 })
 
 router.post('/update/', async(req,res) => {
-    const [id,m]=req.body();
+    const {id,m}=req.body;
     try{
         const user=await prisma.users.findFirst({
             where:{
                 id
             }
         })
-        let w=user.id, t=user.time;
+        let w=user.weight, t=user.size;
         w*=t;w+=m;t++;w/=t;
         const result = await prisma.users.update({
             where:{

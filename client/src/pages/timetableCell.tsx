@@ -8,7 +8,7 @@ const Horizontal = ({children}) => (
     <div style={{display:"flex", border:"none" ,flexDirection:"row"}}>{children}</div>
   );
 
-function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, schedules, setSchedules}){
+function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
     const [mBtnMsg, setMBtnMsg] = useState("수정");
     const [cBtnMsg, setCBtnMsg] = useState("완료");
     const [startHour, setStartHour] = useState<number | "">("");
@@ -27,18 +27,19 @@ function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, sch
     };
 
     const tryModify=(e) => {
-        if(cBtnMsg!=="완료" || startHour==="" || startMinute==="" || name==="") return;
+        if(cBtnMsg!=="완료") return;
         if(mBtnMsg==="수정") setMBtnMsg("ok");
         else {
+            if(startHour==="" || startMinute==="" || name==="") return;
             const asyncFun=async () => {
                 interface IAPIResponse {msg:string};
                 const {data}= await axios.post<IAPIResponse>(`/makeTimetable/modify`,{
                     scheduleId,
-                    beginTime,
                     interval,
-                    name
+                    nBeginTime:60*startHour+startMinute,
+                    nName:name
                 })
-                navigate(`/main/${id}`);
+                window.location.reload();
             }
             asyncFun().catch((e) => {
                 console.log(e);
@@ -52,7 +53,7 @@ function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, sch
                 const {data}= await axios.post<IAPIResponse>(`/makeTimetable/delete`,{
                     scheduleId
                 })
-                navigate(`/main/${id}`);
+                window.location.reload();
         }
         asyncFun().catch((e) => {
             console.log(e);
@@ -60,10 +61,10 @@ function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, sch
         })
     }
     const tryComplete=(e) => {
-        if( startHour==="" || startMinute==="" || endHour==="" || endMinute==="") return;
         if(mBtnMsg!=="수정") return;
         if(cBtnMsg==="완료") setCBtnMsg("ok");
         else {
+            if( startHour==="" || startMinute==="" || endHour==="" || endMinute==="") return;
             const asyncFun=async () => {
                 interface IAPIResponse {msg:string};
                 let rInterval = (endHour*60+endMinute)-(startHour*60+startMinute);
@@ -73,7 +74,6 @@ function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, sch
                     id,
                     m
                 })
-                navigate(`/main/${id}`);
             }
             asyncFun().then(() => tryDelete(e)).catch((e) => {
                 console.log(e);
@@ -86,10 +86,10 @@ function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, sch
         <div className="todo-item">
             <div>
                 {mBtnMsg==="ok"?<input type="text" value={name} onChange={(e) => setName(e.target.value)} />:
-                cBtnMsg==="완료"?<p className="todo-item">{_name}</p>:<p>실제 일정 시각 시간과 끝 시간을 적어주세요</p>}
+                cBtnMsg==="완료"?<p>{_name}</p>:<p>실제 일정 시각 시간과 끝 시간을 적어주세요</p>}
                 
                 <Horizontal>
-                    <p className="todo-item">시작 시각 </p>
+                    <p>시작 시각 </p>
                     {mBtnMsg==="수정"&&cBtnMsg==="완료"?<p>{Math.floor(beginTime/60)}</p>:
                     <input
                         type="number"
@@ -98,7 +98,7 @@ function TimeTableCell({id, scheduleId, beginTime, endTime, interval, _name, sch
                         min="0"
                         max="23"
                     />}  
-                    <p className="todo-item">:</p>
+                    <p>:</p>
                     {mBtnMsg==="수정"&&cBtnMsg==="완료"?<p>{beginTime%60}</p>: 
                     <input
                         type="number"

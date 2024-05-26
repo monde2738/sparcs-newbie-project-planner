@@ -1,9 +1,13 @@
 const express = require('express');
+const {v4} = require('uuid');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
-
-
 const router = express.Router();
+
+const uuid = () => {
+    const tokens = v4().split('-');
+    return tokens[2]+tokens[1]+tokens[0]+tokens[3]+tokens[4];
+}
 
 router.get('/', (req, res) => {
     return res.status(200).json({status:"currently running"})
@@ -36,7 +40,7 @@ router.post('/', async (req, res) => {
             data:{
                 id:id,
                 pw:pw,
-                size:1,
+                size:0,
                 weight:1.0,
                 connectedIp:null
             }
@@ -50,7 +54,7 @@ router.post('/', async (req, res) => {
         for(let i=0;i<7;i++){
             await prisma.days.create({
                 data:{
-                    dayId:toString(Date.now()),
+                    dayId:uuid(),
                     year:curday.getFullYear(),
                     month:curday.getMonth(),
                     day:curday.getDate(),

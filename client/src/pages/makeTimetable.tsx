@@ -9,7 +9,7 @@ const Horizontal = ({children}) => (
     <div style={{display:"flex", border:"none"}}>{children}</div>
   );
 
-function MakeTimeTable(id){
+function MakeTimeTable({id}){
     // need: 과제명, 과제의 아이디-> 자동 생성 메타, 걸릴 시간 -> 이후 시작 시간(일, 시간) 결정. -> 한꺼번에 하면 안됨. 
     const [name,setName]=useState("");
     const [startHour, setStartHour] = useState<number | "">("");
@@ -47,7 +47,8 @@ function MakeTimeTable(id){
                 name,
                 dayId
             })
-            navigate(`/main/${id}`);
+            setIntHour("");setIntMinute("");setStartHour("");setStartMinute("");setName("");
+            window.location.reload();
         }
         asyncFun().catch(e => {
             console.log(e);
@@ -65,6 +66,7 @@ function MakeTimeTable(id){
 
         const asyncFun = async () => {
             interface IAPIResponse {weight:number};
+            console.log(id); // deb
             const {data}= await axios.get<IAPIResponse>(`/weight/${id}`)
             const interval = intHour*60+intMinute;
             const int2=Math.floor(interval*data.weight)
@@ -81,7 +83,7 @@ function MakeTimeTable(id){
     return (
         <div className="make-todo">
             <div>
-                {flg?<p> 시작 날짜/시간을 제외한 나머지 값들을 입력한 후 일정 만들기 버튼을 눌러주세요.</p>:
+                {!flg?<p> 시작 날짜/시간을 제외한 나머지 값들을 입력한 후 일정 만들기 버튼을 눌러주세요.</p>:
                 <p> 시작 날짜/시간을 입력한 후 일정 넣기 버튼을 눌러주세요.</p>}
                 {!flg?<input type="text" value={name} onChange={(e) => setName(e.target.value)} 
                 placeholder="할 일"/>:
@@ -121,7 +123,7 @@ function MakeTimeTable(id){
 
                 <Horizontal>
                     <p className="todo-item">시작 시각 </p>
-                    {flg?<p>{startHour}</p>:
+                    {!flg?<p>{startHour}</p>:
                     <input
                         type="number"
                         value={startHour}
@@ -130,7 +132,7 @@ function MakeTimeTable(id){
                         max="23"
                     />}  
                     <p className="todo-item">:</p>
-                    {flg?<p>{startMinute}</p>: 
+                    {!flg?<p>{startMinute}</p>: 
                     <input
                         type="number"
                         value={startMinute}

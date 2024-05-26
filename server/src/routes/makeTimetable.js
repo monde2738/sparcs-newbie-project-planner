@@ -4,6 +4,12 @@ const prisma = new PrismaClient()
 const authMiddleware = require('../middleware/auth');
 const jwt = require("jsonwebtoken");
 const json = require('body-parser/lib/types/json');
+const {v4} = require('uuid');
+
+const uuid = () => {
+    const tokens = v4().split('-');
+    return tokens[2]+tokens[1]+tokens[0]+tokens[3]+tokens[4];
+}
 
 const router = express.Router();
 
@@ -29,8 +35,8 @@ router.get('/:id/:weekday', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const [beginTime,interval, name, dayId]=req.body();
-    const scheduleId=toString(Date.now());
+    const {beginTime,interval, name, dayId}=req.body;
+    const scheduleId=uuid();
     try{
         const endTime=beginTime+interval;
         const newschedule=await prisma.schedules.create({
@@ -52,17 +58,17 @@ router.post('/', async (req, res) => {
 
 
 router.post('/modify/', async (req, res) => {
-    const [scheduleId,beginTime,interval,name] = req.body();
+    const {scheduleId,interval,nBeginTime,nName} = req.body;
     try{
-        const endTime=beginTime+interval;
+        const endTime=nBeginTime+interval;
         const modifiedschedule = await prisma.schedules.update({
             where:{
                 scheduleId
             },
             data:{
-                beginTime,
+                beginTime:nBeginTime,
                 endTime,
-                name
+                name:nName
             }
         });
         return res.status(200).json({msg:"ok"});
@@ -73,7 +79,7 @@ router.post('/modify/', async (req, res) => {
 })
 
 router.post('/delete/', async (req,res) => {
-    const [scheduleId]=req.body()
+    const {scheduleId}=req.body;
     try{
         const deleteschedule= await prisma.schedules.delete({
             where:{

@@ -1,8 +1,6 @@
 const express = require('express');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
-const authMiddleware = require('../middleware/auth');
-const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -44,8 +42,8 @@ router.get('/:id/', async (req, res) => {
             // 서치, 각 날에 정보 삽입
             for(const day of _schedules.Days){
                 if(day.dayOfWeek===days[i]){
-                    for(const schedule of day.schedules){
-                        ret[days[i]].append({
+                    for(const schedule of day.Schedules){
+                        ret[days[i]].push({
                             scheduleId:schedule.scheduleId,
                             beginTime:schedule.beginTime,
                             endTime:schedule.endTime,

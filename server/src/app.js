@@ -13,6 +13,7 @@ const signupRouter = require('./routes/signup');
 const verifyRouter = require('./routes/verify');
 const mainRouter = require('./routes/main');
 const makeRouter = require('./routes/makeTimetable');
+const weightRouter = require('./routes/weight');
 
 
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.use('/signup/', signupRouter);
 app.use('/verify/',verifyRouter);
 app.use('/main/', mainRouter);
 app.use('/makeTimetable/', makeRouter);
+app.use('/weight/',weightRouter);
 
 
 app.get('/status', async (req, res) => {

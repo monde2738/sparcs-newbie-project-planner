@@ -16,7 +16,6 @@ function TimeTable({id}){
         const asyncFun = async () => {
             interface IAPIResponse {result:object};
             const {data} = await axios.get<IAPIResponse>(`/main/${id}/`);
-            console.log(data);
             return data;
         }
         asyncFun().then((data) => {
@@ -35,7 +34,7 @@ function TimeTable({id}){
             <div>
                 <Horizontal>
                     {days.map((value) => (
-                        <TimeTableColumn id={id} weekday={value} _schedules={weekschedules[value]} />
+                        <TimeTableColumn id={id} key={value} weekday={value} _schedules={weekschedules[value]} />
                     ))}
                 </Horizontal>
             </div>
