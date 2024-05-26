@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Days {
+  dayId     String      @id @db.VarChar(64)
+  year      Int
+  month     Int
+  day       Int
+  id        String      @db.VarChar(20)
+  dayOfWeek String      @db.VarChar(5)
+  Users     Users       @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Days_Users_id_fk")
+  Schedules Schedules[]
+
+  @@index([id], map: "Days_Users_id_fk")
+}
+
+model Schedules {
+  beginTime     Int
+  endTime       Int
+  interval      Int
+  name          String? @db.VarChar(100)
+  dayId         String? @db.VarChar(64)
+  real_interval Int?
+  scheduleId    String  @id @db.VarChar(64)
+  Days          Days?   @relation(fields: [dayId], references: [dayId], onDelete: NoAction, onUpdate: NoAction, map: "Schedules_Days_dayId_fk")
+
+  @@index([dayId], map: "Schedules_Days_dayId_fk")
+}
+
+model Users {
+  id          String  @id @db.VarChar(20)
+  pw          String  @db.VarChar(30)
+  size        Int
+  weight      Float   @db.Float
+  connectedIp String? @db.VarChar(255)
+  Days        Days[]
+}

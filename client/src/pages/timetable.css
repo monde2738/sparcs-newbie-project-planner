@@ -1,0 +1,56 @@
+.timetable-column {
+    min-width:120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    margin:0 0;
+    width: fit-content;
+    max-width: 240px;
+}
+
+.todolist{
+    list-style: none;
+    padding: 0;
+    padding:10px;
+    border:solid;
+    min-width:120px;
+    max-width: 240px;
+}
+
+.timetable-column-header{
+    margin:0 auto 10px;
+    text-align: center;
+}
+
+.todo-item p{
+    white-space: normal;
+    word-wrap: break-word;
+    max-width:230px;
+}
+
+
+.todo-item div{
+    padding:1px;
+    border: 1px solid #ccc;
+    width:fit-content;
+}
+
+.timetable div{
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.make-todo div{
+    /* min-width:480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    margin:0 auto;
+    width: fit-content;
+    max-width: 600px; */
+    align-items: center;
+    margin: 0 auto;
+    width: fit-content;
+}
