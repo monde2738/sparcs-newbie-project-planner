@@ -11,7 +11,8 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        req.decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
+        req.decoded = jwt.verify(req.body.token, 
+            process.env.SECRET_KEY+req.body.key2);
 
         const u=await prisma.users.findFirst({
             where:{

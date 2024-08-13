@@ -8,3 +8,4 @@ dist
 .env.local
 README.md
 todo.txt
+yarn.lock

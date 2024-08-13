@@ -15,10 +15,12 @@ router.get('/', (req, res) => {
 
 router.post('/', authMiddleware, async(req, res) => {
     const {id,pw}=req.body;
+    const now = new Date();
+    const key2 = now.getTime().toString();
     try{
         req.decoded = jwt.sign({
             id:id}
-            ,process.env.SECRET_KEY,
+            ,process.env.SECRET_KEY+key2,
             {expiresIn: '1h'});
         await prisma.users.update({
             where:{
@@ -28,7 +30,7 @@ router.post('/', authMiddleware, async(req, res) => {
                 connectedIp:req.decoded
             }
         })
-        return res.status(200).json({token:req.decoded});
+        return res.status(200).json({token:req.decoded, key2:key2});
     } catch(e) {
         return res.status(500).json({error:e});
     }
