@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect,useRef,useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { SAPIBase } from "../tools/serverapi";
 import "./timetable.css";
 
 
@@ -35,13 +36,13 @@ function MakeTimeTable({id}){
         const asyncFun = async () => {
             // 사용자의 id에서 dayid 뜯어오기. 
             interface IAPIResponse {dayId:string};
-            var {data}= await axios.get<IAPIResponse>(`/makeTimetable/${id}/${weekday}`)
+            var {data}= await axios.get<IAPIResponse>(SAPIBase+`/makeTimetable/${id}/${weekday}`)
             const dayId=data.dayId;
             // dayId로 post 메서드 박기
             interface IAPIResponse {msg:string};
             const beginTime=startHour*60+startMinute;
             const interval = intHour*60+intMinute;
-            var {data}= await axios.post<IAPIResponse>(`/makeTimetable`,{
+            var {data}= await axios.post<IAPIResponse>(SAPIBase+`/makeTimetable`,{
                 beginTime,
                 interval,
                 name,
@@ -67,7 +68,7 @@ function MakeTimeTable({id}){
         const asyncFun = async () => {
             interface IAPIResponse {weight:number};
             console.log(id); // deb
-            const {data}= await axios.get<IAPIResponse>(`/weight/${id}`)
+            const {data}= await axios.get<IAPIResponse>(SAPIBase+`/weight/${id}`)
             const interval = intHour*60+intMinute;
             const int2=Math.floor(interval*data.weight)
             setIntHour(() => Math.floor(int2/60));

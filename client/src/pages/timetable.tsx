@@ -4,6 +4,7 @@ import { useEffect,useRef,useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TimeTableColumn from "./timetableColumn.tsx";
 import "./timetable.css";
+import { SAPIBase } from "../tools/serverapi";
 
 const Horizontal = ({children}) => (
     <div style={{display:"flex"}}>{children}</div>
@@ -15,7 +16,7 @@ function TimeTable({id}){
     useEffect(() => {
         const asyncFun = async () => {
             interface IAPIResponse {result:object};
-            const {data} = await axios.get<IAPIResponse>(`/main/${id}/`);
+            const {data} = await axios.get<IAPIResponse>(SAPIBase+`/main/${id}/`);
             return data;
         }
         asyncFun().then((data) => {
