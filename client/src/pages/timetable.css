@@ -1,5 +1,4 @@
 
-/* 컬럼 스타일 */
 .timetable-column {
     min-width: 120px;
     max-width: 240px;
@@ -19,7 +18,7 @@
     transform: scale(1.02);
 }
 
-/* 리스트 스타일 */
+
 .todolist {
     display: flex;
     list-style: none;
@@ -35,7 +34,7 @@
     justify-content: space-around;
 }
 
-/* 컬럼 헤더 스타일 */
+
 .timetable-column-header {
     margin-bottom: 15px;
     text-align: center;
@@ -54,7 +53,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-/* 할일 항목 스타일 */
+
 .todo-item p {
     white-space: normal;
     word-wrap: break-word;
@@ -64,14 +63,12 @@
     color: #555;
 }
 
-/* 할일 항목의 박스 스타일 */
 .todo-item div {
     width: 100%;
     max-width: 200px;
     flex: 200px;
 }
 
-/* 메인 타임테이블 컨테이너 */
 .timetable {
     display: flex;
     justify-content: center;
@@ -85,7 +82,6 @@
     background: rgb(249, 249, 249);
 }
 
-/* 할일 생성 섹션 */
 .make-todo div {
     align-items: center;
     margin: 0 auto;
@@ -95,4 +91,5 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+
 }
