@@ -18,7 +18,6 @@ function Login(){
     useEffect(() => {
         localStorage.setItem("token", jwttoken);
         localStorage.setItem("key2", key2);
-        console.log("login.tsx", jwttoken, localStorage);
         
         if(localStorage.getItem("token")) navigate(`/main/${id}`);
     },[jwttoken])

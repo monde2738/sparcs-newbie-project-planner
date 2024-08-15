@@ -16,7 +16,9 @@ router.get('/', (req, res) => {
 router.post('/', authMiddleware, async(req, res) => {
     const {id,pw}=req.body;
     const now = new Date();
-    const key2 = now.getTime().toString();
+    const key1= Math.random.toString(16).substring(2,8)
+
+    const key2 = now.getTime().toString(16)+key1;
     try{
         req.decoded = jwt.sign({
             id:id}
@@ -32,7 +34,7 @@ router.post('/', authMiddleware, async(req, res) => {
         })
         return res.status(200).json({token:req.decoded, key2:key2});
     } catch(e) {
-        return res.status(500).json({error:e});
+        return res.status(401).json({error:e});
     }
 })
 

@@ -30,7 +30,7 @@ router.get('/:id/:weekday', async (req, res) => {
         })
         return res.status(200).json({dayId:day.dayId});
     }catch(e){
-
+        console.log(weekday,"얻어오기 실패")
     }
 })
 
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
     const scheduleId=uuid();
     try{
         const endTime=beginTime+interval;
-        const newschedule=await prisma.schedules.create({
+        await prisma.schedules.create({
             data:{
                 scheduleId,
                 beginTime,
@@ -61,7 +61,7 @@ router.post('/modify/', async (req, res) => {
     const {scheduleId,interval,nBeginTime,nName} = req.body;
     try{
         const endTime=nBeginTime+interval;
-        const modifiedschedule = await prisma.schedules.update({
+        await prisma.schedules.update({
             where:{
                 scheduleId
             },
