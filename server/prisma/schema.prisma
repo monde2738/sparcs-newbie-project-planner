@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,7 +9,7 @@ datasource db {
 }
 
 model Days {
-  dayId     String      @id @db.VarChar(64)
+  dayId     String      @id @db.VarChar(255)
   year      Int
   month     Int
   day       Int
@@ -21,23 +22,47 @@ model Days {
 }
 
 model Schedules {
+  scheduleId    String  @id @db.VarChar(128)
   beginTime     Int
   endTime       Int
   interval      Int
   name          String? @db.VarChar(100)
-  dayId         String? @db.VarChar(64)
+  dayId         String? @db.VarChar(255)
   real_interval Int?
-  scheduleId    String  @id @db.VarChar(64)
   Days          Days?   @relation(fields: [dayId], references: [dayId], onDelete: NoAction, onUpdate: NoAction, map: "Schedules_Days_dayId_fk")
 
   @@index([dayId], map: "Schedules_Days_dayId_fk")
 }
 
 model Users {
-  id          String  @id @db.VarChar(20)
-  pw          String  @db.VarChar(30)
+  id          String    @id @db.VarChar(20)
+  pw          String    @db.VarChar(30)
   size        Int
-  weight      Float   @db.Float
-  connectedIp String? @db.VarChar(255)
+  weight      Float     @db.Float
+  connectedIp String?   @db.VarChar(255)
+  Classes     Classes[]
   Days        Days[]
+  Weights     Weights[]
 }
+
+model Classes {
+  classId   String  @id @db.VarChar(30)
+  beginTime Int
+  endTime   Int
+  id        String? @db.VarChar(20)
+  dayOfWeek Int
+  Users     Users?  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Classes_Users_id_fk")
+
+  @@index([id], map: "Classes_Users_id_fk")
+}
+
+model Weights {
+  weightId String @id @db.VarChar(30)
+  weight   Float  @db.Float
+  time     BigInt
+  id       String @db.VarChar(20)
+  Users    Users  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Weights_Users_id_fk")
+
+  @@index([id], map: "Weights_Users_id_fk")
+}
+

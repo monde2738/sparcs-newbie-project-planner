@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useEffect,useRef,useState } from "react";
 import axios from "axios";
@@ -10,26 +11,28 @@ function Login(){
     const [pw,setPw]=useState("");
     const navigate=useNavigate();
     const [jwttoken, setJwttoken]=useState("");
+    const [key2, setKey2]= useState("");
 
     useEffect(() => {
         localStorage.clear();
     },[])
     useEffect(() => {
         localStorage.setItem("token", jwttoken);
-        console.log("login.tsx", jwttoken, localStorage);
+        localStorage.setItem("key2", key2);
         
         if(localStorage.getItem("token")) navigate(`/main/${id}`);
     },[jwttoken])
 
     const tryLogin = () => {
         const asyncFun = async () => {
-            interface IAPIResponse {token:string};
+            interface IAPIResponse {token:string, key2:string};
             const {data} = await axios.post<IAPIResponse>(SAPIBase+"/", {id:id,pw:pw});
             console.log(data);
-            return data.token;
+            return data;
         }
         asyncFun().then((data) => {
-            setJwttoken(() => data);
+            setKey2(() => data.key2)
+            setJwttoken(() => data.token);
         }).catch((e) => window.alert(`아이디나 비밀번호가 다릅니다.(Error: ${e})`));
     }
 

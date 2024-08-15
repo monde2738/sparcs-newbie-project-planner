@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import React from "react";
 import { useEffect,useRef,useState } from "react";
@@ -21,7 +22,8 @@ function Main(){
         const asyncFun = async () => {
             const id=params.id;
             interface IAPIResponse {msg:string};
-            const {data} = await axios.post<IAPIResponse>(SAPIBase+"/verify/", {id,token:localStorage.getItem("token")});
+            const {data} = await axios.post<IAPIResponse>(SAPIBase+"/verify/", 
+                    {id,token:localStorage.getItem("token"),key2:localStorage.getItem("key2")});
             return data;
         }
         asyncFun().then(resp => {

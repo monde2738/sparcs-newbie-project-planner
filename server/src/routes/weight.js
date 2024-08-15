@@ -1,3 +1,4 @@
+
 const express = require('express');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
@@ -19,7 +20,7 @@ router.get('/:id/', async (req, res) => {
             }
         })
         console.log(req.params.id);
-        console.log(user.connectedIp);
+        console.log(user.weight);
         return res.status(200).json({weight:user.weight});
     }catch(e) {
         console.log(e);

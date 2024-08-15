@@ -1,3 +1,4 @@
+
 const express = require('express');
 const {v4} = require('uuid');
 const {PrismaClient} = require('@prisma/client')
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
         if(user){
             return res.status(200).json({success:false, code:4});
         }
-        const newUser=await prisma.users.create({
+        await prisma.users.create({
             data:{
                 id:id,
                 pw:pw,
@@ -51,7 +52,7 @@ router.post('/', async (req, res) => {
             today.getMonth(),
             today.getDate()-today.getDay()
         )
-        for(let i=0;i<7;i++){
+        for(let i=0;i<days.length;i++){
             await prisma.days.create({
                 data:{
                     dayId:uuid(),

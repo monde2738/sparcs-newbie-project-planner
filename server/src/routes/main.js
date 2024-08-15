@@ -1,3 +1,4 @@
+
 const express = require('express');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
@@ -13,7 +14,7 @@ router.get('/:id/', async (req, res) => {
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     try{
         const ret={"SUN":[],"MON":[],"TUE":[],"WED":[],"THU":[],"FRI":[],"SAT":[]};
-        console.log(124);
+        // console.log(124);
         const _schedules = await prisma.users.findFirst({
             where:{
                 id
@@ -31,7 +32,7 @@ router.get('/:id/', async (req, res) => {
                 }
             }
         });
-        console.log(3);
+        // console.log(3);
         let today = new Date();
         let curday = new Date(
             today.getFullYear(),

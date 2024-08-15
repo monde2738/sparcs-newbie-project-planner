@@ -1,4 +1,5 @@
-.timetable-column {
+
+/* .timetable-column {
     min-width:120px;
     display: flex;
     flex-direction: column;
@@ -42,6 +43,12 @@
 }
 
 .make-todo div{
+    align-items: center;
+    margin: 0 auto;
+    width: fit-content;
+} */
+
+/* make-todo div*/
     /* min-width:480px;
     display: flex;
     flex-direction: column;
@@ -50,7 +57,87 @@
     margin:0 auto;
     width: fit-content;
     max-width: 600px; */
+
+/* 컬럼 스타일 */
+.timetable-column {
+    min-width: 120px;
+    max-width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    margin: 0 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.timetable-column:hover {
+    transform: scale(1.02);
+}
+
+/* 리스트 스타일 */
+.todolist {
+    list-style: none;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 240px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 컬럼 헤더 스타일 */
+.timetable-column-header {
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+}
+
+/* 할일 항목 스타일 */
+.todo-item p {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 230px;
+    margin: 0;
+    font-size: 1em;
+    color: #555;
+}
+
+/* 할일 항목의 박스 스타일 */
+.todo-item div {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* 메인 타임테이블 컨테이너 */
+.timetable {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+/* 할일 생성 섹션 */
+.make-todo div {
     align-items: center;
     margin: 0 auto;
     width: fit-content;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+
 }
