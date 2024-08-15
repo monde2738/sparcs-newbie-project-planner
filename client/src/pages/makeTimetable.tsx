@@ -25,6 +25,27 @@ function MakeTimeTable({id}){
     const navigate=useNavigate();
     const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
+    useEffect(() => {
+        const asyncFun = async () => {
+            interface IAPIResponse {weight:number};
+            console.log(id); // deb
+            if(weight === 0.0) {
+                const {data}= await axios.get<IAPIResponse>(SAPIBase+`/weight/${id}`)
+                console.log(data);
+                setWeight(() => data.weight);
+            }
+            if(intHour==="" || intMinute==="") return;
+            const interval = intHour*60+intMinute;
+            const int2=Math.floor(interval*weight)
+            setIntHour2(() => Math.floor(int2/60));
+            setIntMinute2(() => int2%60);
+        }
+        asyncFun().catch(e => {
+            console.log(e);
+            window.alert("데이터 얻기에 실패했습니다.")
+        })
+      }, [intHour, intMinute]);
+
     const handleInputChange = (setter, min, max) =>
      (event) => {
         const value = event.target.value === "" ? "" : parseInt(event.target.value);
@@ -32,15 +53,6 @@ function MakeTimeTable({id}){
             setter(value);
         }
     };
-
-    const handleInputChange2 = (setter, min, max) =>
-        (event) => {
-           const value = event.target.value === "" ? "" : parseInt(event.target.value);
-           if (value === "" || (value >= min && value <= max)) {
-               setter(value);
-               tryChange();
-           }
-       };
 
     const tryCreate=() => {
         if(intHour==="" || intMinute==="" || startHour==="" || startMinute==="" || name==="") return;
@@ -73,29 +85,6 @@ function MakeTimeTable({id}){
     }
 
 
-    const tryChange= () => {
-        if(intHour==="" || intMinute==="") return;
-
-        const asyncFun = async () => {
-            interface IAPIResponse {weight:number};
-            console.log(id); // deb
-            if(weight === 0.0) {
-                const {data}= await axios.get<IAPIResponse>(SAPIBase+`/weight/${id}`)
-                console.log(data);
-                setWeight(() => data.weight);
-            }
-            const interval = intHour*60+intMinute;
-            const int2=Math.floor(interval*weight)
-            setIntHour2(() => Math.floor(int2/60));
-            setIntMinute2(() => int2%60);
-        }
-        asyncFun().catch(e => {
-            console.log(e);
-            window.alert("데이터 얻기에 실패했습니다.")
-        })
-
-    }
-
     return (
         <div className="make-todo">
             <div>
@@ -115,7 +104,7 @@ function MakeTimeTable({id}){
                 </Horizontal>
 
                 <Horizontal>
-                    <p className="todo-item">시작 시각 </p>
+                    <p>시작 시각 </p>
                     <input
                         type="number"
                         value={startHour}
@@ -123,7 +112,7 @@ function MakeTimeTable({id}){
                         min="0"
                         max="23"
                     />
-                    <p className="todo-item">:</p>
+                    <p>:</p>
                     <input
                         type="number"
                         value={startMinute}
@@ -139,7 +128,7 @@ function MakeTimeTable({id}){
                     <input
                         type="number"
                         value={intHour}
-                        onChange={handleInputChange2(setIntHour, 0, 23)}
+                        onChange={handleInputChange(setIntHour, 0, 23)}
                         min="0"
                         max="23"
                     />
@@ -147,7 +136,7 @@ function MakeTimeTable({id}){
                     <input
                         type="number"
                         value={intMinute}
-                        onChange={handleInputChange2(setIntMinute, 0, 59)}
+                        onChange={handleInputChange(setIntMinute, 0, 59)}
                         min="0"
                         max="59"
                     />

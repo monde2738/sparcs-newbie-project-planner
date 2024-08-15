@@ -1,3 +1,33 @@
-.login{
-    align-items: center;
+
+.container input{
+    width: 15%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1em;
+    box-shadow: inset 7px 2px 10px #babebc, inset -5px -5px 12px #fff;
+}
+
+
+.container button {
+    width: 15%;
+    padding: 10px;
+    border: none;
+    outline:none;
+    border-radius: 20px;
+    background-color: #fff;
+    /* margin: 14px; */
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.green:hover {
+    background-color: #4cae4c;
+}
+
+.blue:hover{
+    background-color: #1E90FF;
 }

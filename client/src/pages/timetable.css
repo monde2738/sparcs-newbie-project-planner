@@ -1,64 +1,4 @@
 
-/* .timetable-column {
-    min-width:120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    margin:0 0;
-    width: fit-content;
-    max-width: 240px;
-}
-
-.todolist{
-    list-style: none;
-    padding: 0;
-    padding:10px;
-    border:solid;
-    min-width:120px;
-    max-width: 240px;
-}
-
-.timetable-column-header{
-    margin:0 auto 10px;
-    text-align: center;
-}
-
-.todo-item p{
-    white-space: normal;
-    word-wrap: break-word;
-    max-width:230px;
-}
-
-
-.todo-item div{
-    padding:1px;
-    border: 1px solid #ccc;
-    width:fit-content;
-}
-
-.timetable div{
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.make-todo div{
-    align-items: center;
-    margin: 0 auto;
-    width: fit-content;
-} */
-
-/* make-todo div*/
-    /* min-width:480px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    margin:0 auto;
-    width: fit-content;
-    max-width: 600px; */
-
-/* 컬럼 스타일 */
 .timetable-column {
     min-width: 120px;
     max-width: 240px;
@@ -67,18 +7,20 @@
     align-items: center;
     background-color: #f9f9f9;
     margin: 0 10px;
-    padding: 20px;
+    padding: 20px 35px 20px 16px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
+    justify-content: center;
 }
 
 .timetable-column:hover {
     transform: scale(1.02);
 }
 
-/* 리스트 스타일 */
+
 .todolist {
+    display: flex;
     list-style: none;
     padding: 10px;
     border: 1px solid #e0e0e0;
@@ -87,9 +29,12 @@
     width: 100%;
     max-width: 240px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    margin: 0 auto;
+    justify-content: space-around;
 }
 
-/* 컬럼 헤더 스타일 */
+
 .timetable-column-header {
     margin-bottom: 15px;
     text-align: center;
@@ -98,7 +43,17 @@
     color: #333;
 }
 
-/* 할일 항목 스타일 */
+.todo-item {
+    display: flex;
+    padding: 2px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+
 .todo-item p {
     white-space: normal;
     word-wrap: break-word;
@@ -108,18 +63,12 @@
     color: #555;
 }
 
-/* 할일 항목의 박스 스타일 */
 .todo-item div {
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    margin-bottom: 10px;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    max-width: 200px;
+    flex: 200px;
 }
 
-/* 메인 타임테이블 컨테이너 */
 .timetable {
     display: flex;
     justify-content: center;
@@ -129,7 +78,10 @@
     background-color: #f4f4f9;
 }
 
-/* 할일 생성 섹션 */
+.make-todo{
+    background: rgb(249, 249, 249);
+}
+
 .make-todo div {
     align-items: center;
     margin: 0 auto;
