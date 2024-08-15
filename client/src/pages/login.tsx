@@ -3,7 +3,7 @@ import { useEffect,useRef,useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { SAPIBase, CAPIBase } from "../tools/serverapi";
-// css 
+import "./login.css";
 
 function Login(){
     const [id,setId]=useState("");
@@ -36,26 +36,24 @@ function Login(){
     }
 
     return (
-        <div>
-                <h1 className="login">PLANNER</h1><br />
+        <div className="container">
+                <h1 className="title">PLANNER</h1><br />
             <div>
-                <label htmlFor="userId">아이디:</label>
-                <input className="login" type="text" name="userId" id="userId" placeholder="id(학번)" 
+                <input className="login" type="text" name="userId" id="userId" placeholder="아이디" 
                 value={id} onChange={(e) => {
                     setId(() => e.target.value);
                 }}/> <br />
             </div>
             <div>
-                <label htmlFor="userPw">비밀번호:</label>
                 <input className="login" type="password" name="userPw" id="userPw" placeholder="비밀번호" 
                 value={pw} onChange={(e) => {
                     setPw(() => e.target.value);
                 }}/> <br />
-                <button onClick = {(e) => tryLogin()}>로그인</button>
+                <button className="green" onClick = {(e) => tryLogin()}>로그인</button>
             </div>
             <br /><br />
             <p>아직 회원가입을 하지 않으셨나요?</p>
-            <a href={CAPIBase+"/signup"}>회원가입</a>
+            <button className="blue" onClick={() => navigate(`/signup`)}>회원가입</button>
         </div>
     );
 }

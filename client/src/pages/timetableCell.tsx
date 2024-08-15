@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./timetable.css";
@@ -12,21 +12,27 @@ const Horizontal = ({children}) => (
 function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
     const [mBtnMsg, setMBtnMsg] = useState("수정");
     const [cBtnMsg, setCBtnMsg] = useState("완료");
-    const [startHour, setStartHour] = useState<number | "">("");
-    const [startMinute, setStartMinute] = useState<number | "">("");
-    const [endHour, setEndHour] = useState<number | "">("");
-    const [endMinute, setEndMinute] = useState<number | "">("");
+    const [startHour, setStartHour] = useState<number | "">(Math.floor(beginTime/60));
+    const [startMinute, setStartMinute] = useState<number | "">(beginTime%60);
+    const [endHour, setEndHour] = useState<number | "">(Math.floor(beginTime/60));
+    const [endMinute, setEndMinute] = useState<number | "">(endTime%60);
     const [name, setName] = useState(_name);
     const navigate=useNavigate();
 
-    const handleInputChange = (setter, min, max) =>
-     (event) => {
+    useEffect(() => {
+        if (cBtnMsg === "완료" && startHour !== "" && startMinute !== "") {
+          const newEndTime = startHour * 60 + startMinute + interval;
+          setEndHour(Math.floor(newEndTime / 60));
+          setEndMinute(newEndTime % 60);
+        }
+      }, [startHour, startMinute, interval, cBtnMsg]);
+    
+      const handleInputChange = (setter, min, max) => (event) => {
         const value = event.target.value === "" ? "" : parseInt(event.target.value);
         if (value === "" || (value >= min && value <= max)) {
-            setter(value);
+          setter(value);
         }
-    };
-
+      };
     const tryModify=(e) => {
         if(cBtnMsg!=="완료") return;
         if(mBtnMsg==="수정") setMBtnMsg("ok");
@@ -112,7 +118,8 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                     
                 <Horizontal>
                     <p>끝 시각 </p>
-                    {cBtnMsg==="완료"?<p>{Math.floor(endTime/60)}</p>:
+                    {mBtnMsg!=="수정"?<p>{endHour}</p>:
+                    cBtnMsg==="완료"?<p>{Math.floor(endTime/60)}</p>:
                     <input
                         type="number"
                         value={endHour}
@@ -121,7 +128,8 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                         max="23"
                     />}
                     <p>:</p>
-                    {cBtnMsg==="완료"?<p>{endTime%60}</p>:
+                    {mBtnMsg!=="수정"?<p>{endMinute}</p>:
+                    cBtnMsg==="완료"?<p>{endTime%60}</p>:
                     <input
                         type="number"
                         value={endMinute}
