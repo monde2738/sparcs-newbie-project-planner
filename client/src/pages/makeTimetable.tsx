@@ -102,7 +102,7 @@ function MakeTimeTable({id}){
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} 
                 placeholder="할 일"/>
 
-<Horizontal>
+                <Horizontal>
                     <p>시작할 요일 </p>
                     <select id="daySelector" value={weekday} onChange={(e) => setWeekday(e.target.value)}>
                         {days.map((day) => (
