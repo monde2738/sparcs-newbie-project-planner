@@ -9,7 +9,7 @@ import TimeTable from './pages/timetable.tsx';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" lang="Kor" >
       <Routes>
         <Route path="/" element={ <Login />} />
         <Route path="/signup" element={ <Signup />} />

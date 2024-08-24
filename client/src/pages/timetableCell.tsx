@@ -96,7 +96,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 cBtnMsg==="완료"?<p>{_name}</p>:<p>실제 일정 시각 시간과 끝 시간을 적어주세요</p>}
                 
                 <Horizontal>
-                    <p>시작 시각 </p>
+                    <p>시작 시각&ensp;</p>
                     {mBtnMsg==="수정"&&cBtnMsg==="완료"?<p>{Math.floor(beginTime/60)}</p>:
                     <input
                         type="number"
@@ -117,7 +117,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 </Horizontal>
                     
                 <Horizontal>
-                    <p>끝 시각 </p>
+                    <p>끝 시각&ensp;</p>
                     {mBtnMsg!=="수정"?<p>{endHour}</p>:
                     cBtnMsg==="완료"?<p>{Math.floor(endTime/60)}</p>:
                     <input
@@ -140,9 +140,11 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 </Horizontal>
 
                 <Horizontal>
-                    <button key="modify" onClick={tryModify}>{mBtnMsg}</button>
-                    <button key="complete" onClick={tryComplete}>{cBtnMsg}</button>
-                    <button key="delete" onClick={tryDelete}>삭제</button>
+                    <div className="buttons">
+                        <button key="modify" className="blue" onClick={tryModify}>{mBtnMsg}</button>
+                        <button key="complete" className="green" onClick={tryComplete}>{cBtnMsg}</button>
+                        <button key="delete" className="red" onClick={tryDelete}>삭제</button>
+                    </div>
                 </Horizontal>
             </div>
         </div>
