@@ -104,7 +104,7 @@ function MakeTimeTable({id}){
                 </Horizontal>
 
                 <Horizontal>
-                    <p>시작 시각 </p>
+                    <p>시작 시각&ensp;</p>
                     <input
                         type="number"
                         value={startHour}
@@ -123,7 +123,7 @@ function MakeTimeTable({id}){
                 </Horizontal>
 
                 <Horizontal>
-                    <p>예상 소요 시간 </p>
+                    <p>예상 소요 시간&ensp;</p>
             
                     <input
                         type="number"
@@ -146,7 +146,7 @@ function MakeTimeTable({id}){
 
 
                 <Horizontal>
-                    <button key="complete" onClick={() => tryCreate()}>일정 넣기</button>
+                    <button key="complete" className="skyblue" onClick={() => tryCreate()}>일정 넣기</button>
                 </Horizontal>
             </div>
         </div>

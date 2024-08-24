@@ -38,6 +38,7 @@ router.post('/update/', async(req,res) => {
         })
         let w=user.weight, t=user.size;
         w*=t;w+=m;t++;w/=t;
+        t=Math.min(20,t);
         const result = await prisma.users.update({
             where:{
                 id
