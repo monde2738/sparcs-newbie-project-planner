@@ -46,9 +46,9 @@
 
 .timetable-column-header p {
     margin: 0;
-    text-align: center; /* Ensure the text is centered within its container */
-    width: 100%; /* Make sure the p tag takes the full width of the header */
-    padding: 0; /* Remove any padding that might be causing alignment issues */
+    text-align: center; 
+    width: 100%; 
+    padding: 0;
 }
 
 .todo-item {
@@ -134,12 +134,12 @@
 
 .make-todo button {
     background-color: #fff;
-    width: auto; /* or specify a fixed width, for example, width: 100px; */
+    width: auto; 
     border: none;
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease;
-    display: inline-block; /* Ensures button does not stretch vertically */
-    margin: 10px 0; /* Adds some space between the button and other elements */
+    display: inline-block; 
+    margin: 10px 0; 
 }
 
