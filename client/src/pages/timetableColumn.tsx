@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import TimeTableCell from "./timetableCell.tsx"; // 여기에서부터 list, setlist 들어오는 게 맞을 듯. 
 import axios from "axios";

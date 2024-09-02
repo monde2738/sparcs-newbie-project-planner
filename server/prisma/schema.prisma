@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -64,3 +65,4 @@ model Weights {
 
   @@index([id], map: "Weights_Users_id_fk")
 }
+
