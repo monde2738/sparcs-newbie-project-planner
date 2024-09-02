@@ -28,7 +28,7 @@ function TimeTableColumn({id, weekday, _schedules}){
             <div className="todolist">
                 {_schedules && _schedules.map((schedule) => (
                     <TimeTableCell key={schedule.scheduleId} id={id} scheduleId={schedule.scheduleId} beginTime={schedule.beginTime}
-                    endTime={schedule.endTime} interval={schedule.interval} _name={schedule.name} dayId={dayId}/>))}
+                    endTime={schedule.endTime} interval={schedule.interval} _name={schedule.name}/>))}
             </div>
         </div>
     )
