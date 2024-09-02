@@ -13,12 +13,10 @@ function Signup(){
     const navigate=useNavigate();
 
     const trySignup = () => {
-        console.log(id,pw)
         const asyncFun = async () => {
             interface IAPIResponse {success:boolean, code:number};
             const {data} = await axios.post<IAPIResponse>(SAPIBase+"/signup", {id:id,pw:pw,pw2:pw2});
             const {success, code}=data;
-            console.log(success);
             if(success){
                 window.alert("성공적으로 생성되었습니다.")
                 navigate("/"); 

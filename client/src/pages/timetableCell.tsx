@@ -49,7 +49,6 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 window.location.reload();
             }
             asyncFun().catch((e) => {
-                console.log(e);
                 window.alert("데이터 수정에 실패했습니다.")
             })
         }
@@ -63,7 +62,6 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 window.location.reload();
         }
         asyncFun().catch((e) => {
-            console.log(e);
             window.alert("데이터 삭제에 실패했습니다.")
         })
     }
@@ -83,7 +81,6 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 })
             }
             asyncFun().then(() => tryDelete(e)).catch((e) => {
-                console.log(e);
                 window.alert("데이터 전송에 실패했습니다.")
             })
         }
@@ -96,7 +93,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 cBtnMsg==="완료"?<p>{_name}</p>:<p>실제 일정 시각 시간과 끝 시간을 적어주세요</p>}
                 
                 <Horizontal>
-                    <p>시작 시각&ensp;</p>
+                    <p>시작&ensp;</p>
                     {mBtnMsg==="수정"&&cBtnMsg==="완료"?<p>{Math.floor(beginTime/60)}</p>:
                     <input
                         type="number"
@@ -117,7 +114,7 @@ function TimeTableCell({scheduleId, id, beginTime, endTime, interval, _name}){
                 </Horizontal>
                     
                 <Horizontal>
-                    <p>끝 시각&ensp;</p>
+                    <p>끝&ensp;</p>
                     {mBtnMsg!=="수정"?<p>{endHour}</p>:
                     cBtnMsg==="완료"?<p>{Math.floor(endTime/60)}</p>:
                     <input

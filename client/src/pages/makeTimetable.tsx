@@ -27,10 +27,8 @@ function MakeTimeTable({id}){
     useEffect(() => {
         const asyncFun = async () => {
             interface IAPIResponse {weight:number};
-            console.log(id); // deb
             if(weight === 0.0) {
                 const {data}= await axios.get<IAPIResponse>(SAPIBase+`/weight/${id}`)
-                console.log(data);
                 setWeight(() => data.weight);
             }
             if(intHour==="" || intMinute==="") return;
@@ -40,7 +38,6 @@ function MakeTimeTable({id}){
             setIntMinute2(() => int2%60);
         }
         asyncFun().catch(e => {
-            console.log(e);
             window.alert("데이터 얻기에 실패했습니다.")
         })
       }, [intHour, intMinute]);
@@ -62,7 +59,6 @@ function MakeTimeTable({id}){
             interface IAPIResponse {dayId:string};
             var {data}= await axios.get<IAPIResponse>(SAPIBase+`/makeTimetable/${id}/${weekday}`)
             const dayId=data.dayId;
-            console.log(dayId);
             // dayId로 post 메서드 박기
             interface IAPIResponse {msg:string};
             const beginTime=startHour*60+startMinute;
@@ -78,7 +74,6 @@ function MakeTimeTable({id}){
             window.location.reload();
         }
         asyncFun().catch(e => {
-            console.log(e);
             window.alert("데이터 추가에 실패했습니다.")
         })
     }
