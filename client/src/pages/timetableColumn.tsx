@@ -14,7 +14,6 @@ function TimeTableColumn({id, weekday, _schedules}){
             setDayId(() => data.dayId);
         }
         asyncFun().catch((e) => {
-            console.log(e);
             window.alert(`${weekday} 시간표 받아오기 실패`);
         })
     },[])
