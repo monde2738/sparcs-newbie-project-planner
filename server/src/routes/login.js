@@ -16,7 +16,9 @@ router.get('/', (req, res) => {
 router.post('/', authMiddleware, async(req, res) => {
     const {id,pw}=req.body;
     const now = new Date();
-    const key1= Math.random.toString(16).substring(2,8)
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    const key1=array[0].toString(16);
 
     const key2 = now.getTime().toString(16)+key1;
     try{
